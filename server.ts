@@ -12,7 +12,53 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '1mb' }));
+
+// Public AI requests have bounded payload, per-IP, and global daily quotas.
+const AI_REQUESTS_PER_MINUTE = 10;
+const configuredDailyAiLimit = Number(process.env.AI_DAILY_REQUEST_LIMIT || 100);
+const AI_DAILY_REQUEST_LIMIT = Number.isFinite(configuredDailyAiLimit)
+  ? Math.min(1000, Math.max(1, Math.floor(configuredDailyAiLimit)))
+  : 100;
+const aiRequestWindows = new Map<string, { startedAt: number; count: number }>();
+let aiQuotaDay = new Date().toISOString().slice(0, 10);
+let aiRequestsToday = 0;
+
+app.use('/api/ai', (req, res, next) => {
+  const now = Date.now();
+  const today = new Date(now).toISOString().slice(0, 10);
+  if (today !== aiQuotaDay) {
+    aiQuotaDay = today;
+    aiRequestsToday = 0;
+  }
+
+  const payloadSize = JSON.stringify(req.body ?? {}).length;
+  if (payloadSize > 900_000) {
+    return res.status(413).json({ error: 'AI request payload is too large.' });
+  }
+  if (aiRequestsToday >= AI_DAILY_REQUEST_LIMIT) {
+    return res.status(429).json({ error: 'Daily AI request limit reached.' });
+  }
+
+  const clientKey = req.ip || req.socket.remoteAddress || 'unknown';
+  let window = aiRequestWindows.get(clientKey);
+  if (!window || now - window.startedAt >= 60_000) {
+    window = { startedAt: now, count: 0 };
+    aiRequestWindows.set(clientKey, window);
+  }
+  if (window.count >= AI_REQUESTS_PER_MINUTE) {
+    return res.status(429).json({ error: 'AI request rate limit reached.' });
+  }
+
+  window.count += 1;
+  aiRequestsToday += 1;
+  if (aiRequestWindows.size > 10_000) {
+    for (const [key, value] of aiRequestWindows) {
+      if (now - value.startedAt >= 60_000) aiRequestWindows.delete(key);
+    }
+  }
+  next();
+});
 
 // Initialize Gemini Client if API key is set
 let aiClient: GoogleGenAI | null = null;
@@ -117,6 +163,7 @@ Hãy trả về DUY NHẤT một chuỗi JSON chuẩn (không bọc trong markdo
     const response = await aiClient.models.generateContent({
       model: 'gemini-3.8-flash',
       contents: prompt,
+      config: { maxOutputTokens: 4096 },
     });
 
     const text = response.text || '';
@@ -174,6 +221,7 @@ Hãy xuất ra định dạng JSON:
     const response = await aiClient.models.generateContent({
       model: 'gemini-3.8-flash',
       contents: prompt,
+      config: { maxOutputTokens: 4096 },
     });
 
     const text = response.text || '';
@@ -208,6 +256,7 @@ Hãy cung cấp:
       model: 'gemini-3.5-flash',
       contents: prompt,
       config: {
+        maxOutputTokens: 4096,
         tools: [{ googleSearch: {} }],
       },
     });
@@ -227,152 +276,9 @@ Hãy cung cấp:
 });
 
 // ==========================================
-// CLOUD DATABASE & DATA SYNC API ROUTES
+// Cloud data routes require verified authentication and are not exposed in this public starter.
 // ==========================================
-import { cloudStore } from './server/cloudStore.ts';
 
-// Sync Pull: Retrieve user-accessible cloud state
-app.get('/api/sync/pull', (req, res) => {
-  try {
-    const userId = (req.query.userId as string) || 'user-lananh-01';
-    const isAdmin = req.query.isAdmin === 'true';
-    const stories = cloudStore.getStoriesForUser(userId, isAdmin);
-    const data = cloudStore.getData();
-
-    res.json({
-      success: true,
-      lastUpdated: data.lastUpdated,
-      stories,
-      translationMemory: Object.values(data.translationMemory),
-      vocabulary: Object.values(data.vocabulary),
-      terminology: Object.values(data.terminology),
-      contributions: Object.values(data.contributions),
-      auditLogs: data.auditLogs.slice(0, 50),
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Sync Push: Push local changes (stories, chapters, TM, etc.) to cloud
-app.post('/api/sync/push', (req, res) => {
-  try {
-    const { userId, userName, stories, chapters, translationMemory, vocabulary, terminology } = req.body;
-    if (!userId) {
-      return res.status(400).json({ success: false, error: 'Thiếu userId' });
-    }
-
-    if (stories && Array.isArray(stories)) {
-      cloudStore.saveStories(stories, userId, userName);
-    }
-    if (chapters && Array.isArray(chapters)) {
-      cloudStore.saveChapters(chapters, userId);
-    }
-    if (translationMemory && Array.isArray(translationMemory)) {
-      cloudStore.saveTranslationMemory(translationMemory, userId);
-    }
-    if (vocabulary && Array.isArray(vocabulary)) {
-      cloudStore.saveVocabulary(vocabulary, userId);
-    }
-    if (terminology && Array.isArray(terminology)) {
-      cloudStore.saveTerminology(terminology, userId);
-    }
-
-    res.json({
-      success: true,
-      syncedAt: new Date().toISOString(),
-      message: 'Đã đồng bộ thành công với máy chủ đám mây!',
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Search Shared Knowledge Base
-app.get('/api/knowledge/search', (req, res) => {
-  try {
-    const query = (req.query.q as string) || '';
-    const category = req.query.category as string;
-    const source = req.query.source as string;
-
-    const results = cloudStore.searchKnowledge(query, category, source);
-    res.json({ success: true, ...results });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Community Contributions
-app.get('/api/contributions', (req, res) => {
-  try {
-    const data = cloudStore.getData();
-    res.json({ success: true, contributions: Object.values(data.contributions) });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.post('/api/contributions', (req, res) => {
-  try {
-    const { contribution, userId, userName } = req.body;
-    if (!contribution || !userId) {
-      return res.status(400).json({ success: false, error: 'Thiếu thông tin đóng góp' });
-    }
-    const created = cloudStore.addContribution(contribution, userId, userName || 'Translator');
-    res.json({ success: true, contribution: created });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.post('/api/contributions/:id/review', (req, res) => {
-  try {
-    const { id } = req.params;
-    const { decision, reviewerId, reviewerName, notes } = req.body;
-    if (!decision || !['APPROVED', 'REJECTED', 'MERGE'].includes(decision)) {
-      return res.status(400).json({ success: false, error: 'Quyết định không hợp lệ' });
-    }
-    const updated = cloudStore.reviewContribution(id, decision, reviewerId, reviewerName, notes);
-    if (!updated) {
-      return res.status(404).json({ success: false, error: 'Không tìm thấy đóng góp' });
-    }
-    res.json({ success: true, contribution: updated });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Audit Logs
-app.get('/api/audit', (req, res) => {
-  try {
-    const data = cloudStore.getData();
-    res.json({ success: true, logs: data.auditLogs });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-app.post('/api/audit', (req, res) => {
-  try {
-    const { userId, userName, action, entityType, entityId, details } = req.body;
-    const entry = cloudStore.logAudit(userId || 'system', userName || 'System', action, entityType, entityId, details);
-    res.json({ success: true, entry });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Dashboard Statistics
-app.get('/api/dashboard/stats', (req, res) => {
-  try {
-    const stats = cloudStore.getDashboardStats();
-    res.json({ success: true, stats });
-  } catch (err: any) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-// Vite middleware mounting
 async function startServer() {
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'dist')));
