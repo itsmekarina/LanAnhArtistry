@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email"]
+    },
+    "Story": {
+      "title": "Story",
+      "description": "Literary translation work and story metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "sourceLanguage": { "type": "string" },
+        "targetLanguage": { "type": "string" },
+        "privacy": { "type": "string" },
+        "totalChapters": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "title"]
+    },
+    "TranslationMemory": {
+      "title": "TranslationMemory",
+      "description": "Translation memory phrases and terminology",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "storyId": { "type": "string" },
+        "original": { "type": "string" },
+        "translation": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "original", "translation"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user account profiles"
+    },
+    "/stories/{storyId}": {
+      "schema": "Story",
+      "description": "Stores translated novel projects"
+    },
+    "/translation_memories/{tmId}": {
+      "schema": "TranslationMemory",
+      "description": "Stores translation memory and terminology"
+    }
+  }
+}

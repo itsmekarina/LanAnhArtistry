@@ -1,0 +1,6 @@
+{
+  "name": "LanAnhArtistry",
+  "description": "Translation Workspace & Story Knowledge Base for translators translating Chinese & English into Vietnamese with Contextual Translation Memory, Character Memory, Story Bible, and Consistency Review.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
