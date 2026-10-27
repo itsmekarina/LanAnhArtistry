@@ -1,6 +1,6 @@
 # LanAnhArtistry
 
-LanAnhArtistry is a public landing website about literary translation and storytelling.
+LanAnhArtistry is a public landing website for a translated-story library. The homepage includes search, genre filters, featured stories, latest chapter updates, and a ranking section. Story and chapter entries are clearly marked as illustrative sample content.
 
 ## Run locally
 
