@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // GitHub Pages serves this repository under /LanAnhArtistry/.
+    base: '/LanAnhArtistry/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
