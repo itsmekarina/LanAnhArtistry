@@ -13,9 +13,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Plus+Jakarta+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      #site-fallback { min-height: 100vh; box-sizing: border-box; padding: 28px max(24px, calc((100vw - 1100px) / 2)); background: #f7f7f2; color: #252d2a; font-family: Arial, sans-serif; }
+      #site-fallback header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid #e4e6de; }
+      #site-fallback .brand { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #315f58; }
+      #site-fallback .hero { padding: 72px 0 52px; }
+      #site-fallback .eyebrow { color: #648176; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+      #site-fallback h1 { max-width: 720px; margin: 18px 0; font: 500 clamp(42px, 7vw, 72px)/1.06 Georgia, serif; }
+      #site-fallback h1 em { color: #527d70; }
+      #site-fallback p { max-width: 660px; color: #68736d; line-height: 1.8; }
+      #site-fallback a { color: #315f58; }
+      #site-fallback .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 30px; }
+      #site-fallback article { padding: 22px; border: 1px solid #e4e5dd; border-radius: 18px; background: white; }
+      #site-fallback article h2 { font: 600 21px Georgia, serif; }
+      #site-fallback article small { color: #78847c; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="site-fallback">
+        <header><span class="brand">LanAnhArtistry</span><span class="eyebrow">Thư viện truyện dịch</span></header>
+        <main>
+          <section class="hero">
+            <span class="eyebrow">Không gian dành cho người yêu truyện</span>
+            <h1>Tìm một câu chuyện.<br /><em>Ở lại với thế giới ấy.</em></h1>
+            <p>Khám phá truyện dịch được tuyển chọn, theo dõi chương mới và tìm thể loại hợp với tâm trạng hôm nay.</p>
+            <a href="#stories">Khám phá thư viện ↓</a>
+          </section>
+          <section id="stories">
+            <span class="eyebrow">Truyện dành cho bạn · Nội dung minh họa</span>
+            <div class="grid">
+              <article><small>ĐÔ THỊ · TRUYỆN MẪU</small><h2>Mùa mưa qua phố cũ</h2><p>Một cuộc gặp tình cờ đưa hai người xa lạ trở lại con phố họ từng muốn quên.</p></article>
+              <article><small>CỔ ĐẠI · TRUYỆN MẪU</small><h2>Khúc hát bên bờ Vị Thủy</h2><p>Giữa kinh thành nhiều biến động, một khúc đàn hé lộ bí mật của gia tộc.</p></article>
+              <article><small>HUYỀN HUYỄN · TRUYỆN MẪU</small><h2>Người giữ đèn trên núi</h2><p>Người gác đèn trẻ tuổi phát hiện ngọn lửa mình gìn giữ có thể gọi tên ký ức.</p></article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
