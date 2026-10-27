@@ -99,13 +99,44 @@
     .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px;padding:25px 0 0}
     .about h2{max-width:420px;margin:10px 0 0;font:500 30px/1.22 Georgia,serif}
     .about p{margin:0 0 12px;color:#68736d;font-size:13px;line-height:1.85}
+    .glossary{background:#f0f2eb;border-block:1px solid #e3e7dd}
+    .glossary-intro{max-width:680px;color:#68736d;font-size:13px;line-height:1.8}
+    .glossary-toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin:22px 0}
+    .glossary-search,.field{width:100%;padding:12px 14px;border:1px solid #dfe4dc;border-radius:12px;background:white;color:var(--ink);outline-color:var(--green)}
+    .glossary-search{min-height:48px}
+    .glossary-count{align-self:center;color:#718078;font-size:11px}
+    .term-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .term-card{padding:19px;border:1px solid #e1e5dd;border-radius:15px;background:white}
+    .term-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+    .term-hanzi{font:600 30px/1.15 Georgia,serif}
+    .term-pinyin{margin-top:5px;color:#6f8176;font-size:12px}
+    .term-tag{padding:5px 9px;border-radius:999px;background:#eef2ec;color:#527064;font-size:10px;white-space:nowrap}
+    .term-meaning{margin:13px 0;color:#35433b;font-size:13px}
+    .term-meta{display:flex;gap:9px;flex-wrap:wrap;color:#78847c;font-size:10px}
+    .context-list{margin-top:13px;padding-top:12px;border-top:1px solid #edf0ea}
+    .context{padding:9px 0;border-bottom:1px solid #f0f1ed}
+    .context:last-child{border-bottom:0}
+    .context-book{font-size:10px;font-weight:700;color:#52685c}
+    .context p{margin:5px 0 0;font-size:12px;line-height:1.7}
+    .context .translation{color:#778179}
+    .term-note{margin-top:10px;color:#849087;font-size:11px;font-style:italic}
+    .glossary-empty{display:none;padding:24px;border:1px dashed #d6ddd4;border-radius:14px;background:#fff;text-align:center;color:#78847c}
+    .note-box{margin-top:27px;padding:21px;border:1px solid #e1e5dd;border-radius:16px;background:#fff}
+    .note-box h3{margin:0;font:600 19px Georgia,serif}
+    .note-box>p{margin:7px 0 15px;color:#778179;font-size:11px}
+    .term-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+    .term-form textarea{min-height:82px;resize:vertical}
+    .term-form .wide{grid-column:1/-1}
+    .field-help{grid-column:1/-1;color:#829087;font-size:10px}
+    .term-submit{justify-self:start;min-height:42px;padding:0 17px;border:0;border-radius:999px;background:var(--green);color:#fff;font-size:12px;font-weight:700}
+    .local-label{color:#829087;font-size:10px}
     footer{border-top:1px solid var(--line);background:white}
     .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:25px 0}
     .foot-brand{font:700 16px Georgia,serif;color:#3e5d58}
     .foot-note{margin-top:4px;color:#89938c;font-size:10px}
     .foot-links{display:flex;gap:18px;color:#77837b;font-size:10px}
     @media(max-width:900px){nav{gap:14px}.hero-grid{gap:30px}.story-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:680px){.wrap{width:min(100% - 28px,540px)}.topbar-inner{min-height:66px;gap:12px}.brand-sub{display:none}nav{display:none}.search{width:auto;flex:1}.hero-grid{grid-template-columns:1fr;padding:51px 0 62px}.book-stage{min-height:300px}.book{width:190px;height:265px}.book-shadow{width:180px;height:250px}.section{padding:48px 0}.section-title{font-size:26px}.story-grid{gap:10px}.story-cover{height:126px;padding:11px}.story-body{padding:13px}.story-body h3{font-size:17px}.story-desc{font-size:10px}.story-meta{font-size:8px}.lower-grid{grid-template-columns:1fr;gap:38px}.about{grid-template-columns:1fr;gap:15px}.about h2{font-size:26px}.footer-inner{align-items:flex-start;flex-direction:column}.foot-links{flex-wrap:wrap}}
+    @media(max-width:680px){.wrap{width:min(100% - 28px,540px)}.topbar-inner{min-height:66px;gap:12px}.brand-sub{display:none}nav{display:none}.search{width:auto;flex:1}.hero-grid{grid-template-columns:1fr;padding:51px 0 62px}.book-stage{min-height:300px}.book{width:190px;height:265px}.book-shadow{width:180px;height:250px}.section{padding:48px 0}.section-title{font-size:26px}.story-grid{gap:10px}.story-cover{height:126px;padding:11px}.story-body{padding:13px}.story-body h3{font-size:17px}.story-desc{font-size:10px}.story-meta{font-size:8px}.lower-grid{grid-template-columns:1fr;gap:38px}.about{grid-template-columns:1fr;gap:15px}.about h2{font-size:26px}.footer-inner{align-items:flex-start;flex-direction:column}.foot-links{flex-wrap:wrap}.glossary-toolbar{grid-template-columns:1fr}.term-grid{grid-template-columns:1fr}.term-form{grid-template-columns:1fr}.term-form .wide,.field-help{grid-column:auto}}
     @media(max-width:390px){.story-grid{grid-template-columns:1fr}.story-cover{height:150px}.update{align-items:flex-start;flex-direction:column}.update-info{white-space:normal}}
   </style>
 </head>
@@ -113,7 +144,7 @@
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a class="brand" href="#top"><span class="brand-mark">L</span><span><span class="brand-name">LanAnhArtistry</span><span class="brand-sub">Thư viện truyện dịch</span></span></a>
-      <nav aria-label="Điều hướng chính"><a href="#truyen-moi">Truyện mới</a><a href="#the-loai">Thể loại</a><a href="#xep-hang">Xếp hạng</a><a href="#gioi-thieu">Giới thiệu</a></nav>
+      <nav aria-label="Điều hướng chính"><a href="#truyen-moi">Truyện mới</a><a href="#the-loai">Thể loại</a><a href="#tu-dien">Từ điển</a><a href="#xep-hang">Xếp hạng</a></nav>
       <label class="search"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Tìm truyện, tác giả..." aria-label="Tìm truyện hoặc tác giả"></label>
     </div>
   </header>
@@ -133,6 +164,35 @@
           <div class="book"><div class="book-top"><span>LanAnhArtistry</span><span>✧</span></div><div><div class="book-kicker">Tuyển tập minh họa</div><div class="book-title">Những<br>ngày dịu<br>dàng</div><div class="book-foot">Truyện dịch · Tập 01</div></div><div class="book-line"></div></div>
           <div class="book-caption"><small>Gợi ý hôm nay</small><strong>♡ &nbsp;Một truyện để đọc chậm</strong></div>
         </div>
+      </div>
+    </section>
+
+    <section class="glossary section" id="tu-dien">
+      <div class="wrap">
+        <div class="section-head"><div><div class="eyebrow">Sổ tay dịch truyện</div><h2 class="section-title">Từ vựng &amp; xưng hô</h2></div><span class="local-label">Ghi chú lưu trên thiết bị này</span></div>
+        <p class="glossary-intro">Tra từ tiếng Trung, xem pinyin, loại từ, cách dịch và ngữ cảnh trong từng bộ. Bạn có thể thêm ghi chú riêng; pinyin và loại từ được gợi ý tự động để bạn kiểm tra, chỉnh lại theo câu. Các mục có sẵn bên dưới chỉ là ví dụ minh họa.</p>
+        <div class="glossary-toolbar"><input class="glossary-search" id="termSearch" type="search" placeholder="Tìm chữ Hán, pinyin, nghĩa tiếng Việt, nhân vật..." aria-label="Tìm từ vựng và xưng hô"><span class="glossary-count" id="termCount" aria-live="polite"></span></div>
+        <div class="term-grid" id="termGrid"></div>
+        <div class="glossary-empty" id="termEmpty">Chưa có mục phù hợp. Hãy thử từ khác hoặc thêm ghi chú mới.</div>
+        <form class="note-box" id="termForm">
+          <h3>Thêm vào sổ tay</h3>
+          <p>Nhập câu gốc và bản dịch để lưu cách dùng theo bộ truyện.</p>
+          <div class="term-form">
+            <input class="field" id="termChinese" required maxlength="40" placeholder="Từ / cụm từ tiếng Trung · 例如 师兄">
+            <input class="field" id="termPinyin" placeholder="Pinyin tự động" aria-label="Pinyin">
+            <select class="field" id="termPos" aria-label="Loại từ">
+              <option value="">Chọn loại từ</option><option>Danh từ</option><option>Động từ</option><option>Tính từ</option><option>Đại từ</option><option>Trợ từ</option><option>Xưng hô</option><option>Danh từ · xưng hô</option><option>Động từ · tính từ</option><option>Thành ngữ / cụm từ</option><option>Danh từ (gợi ý)</option><option>Động từ (gợi ý)</option><option>Tính từ (gợi ý)</option><option>Trợ từ (gợi ý)</option><option>Cụm từ (gợi ý)</option><option>Khác</option>
+            </select>
+            <input class="field" id="termMeaning" required maxlength="120" placeholder="Nghĩa / cách dịch đề xuất">
+            <input class="field" id="termBook" required maxlength="100" placeholder="Tên bộ truyện">
+            <input class="field" id="termRelation" maxlength="100" placeholder="Xưng hô giữa ai với ai (nếu có)">
+            <textarea class="field wide" id="termSource" maxlength="400" placeholder="Câu tiếng Trung chứa từ này"></textarea>
+            <textarea class="field wide" id="termTranslation" maxlength="400" placeholder="Câu dịch tiếng Việt / ngữ cảnh"></textarea>
+            <textarea class="field wide" id="termNote" maxlength="300" placeholder="Ghi chú riêng: sắc thái, quy tắc xưng hô..."></textarea>
+            <span class="field-help" id="termAutoHint">Pinyin và loại từ là gợi ý tự động; hãy kiểm tra từ đa âm hoặc sắc thái theo ngữ cảnh.</span>
+            <button class="term-submit" type="submit">Lưu vào sổ tay</button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -190,7 +250,7 @@
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><div><a class="foot-brand" href="#top">LanAnhArtistry</a><div class="foot-note">Thư viện truyện dịch và nghệ thuật kể chuyện.</div></div><div class="foot-links"><a href="#truyen-moi">Truyện mới</a><a href="#the-loai">Thể loại</a><a href="#gioi-thieu">Giới thiệu</a></div><span class="foot-note">© LanAnhArtistry</span></div></footer>
+  <footer><div class="wrap footer-inner"><div><a class="foot-brand" href="#top">LanAnhArtistry</a><div class="foot-note">Thư viện truyện dịch và nghệ thuật kể chuyện.</div></div><div class="foot-links"><a href="#truyen-moi">Truyện mới</a><a href="#the-loai">Thể loại</a><a href="#tu-dien">Từ điển</a><a href="#gioi-thieu">Giới thiệu</a></div><span class="foot-note">© LanAnhArtistry</span></div></footer>
 
   <script>
     (function () {
@@ -232,7 +292,87 @@
       });
       more.addEventListener('click', function () { showAll = !showAll; update(); });
       update();
+
+      var termSearch = document.getElementById('termSearch');
+      var termGrid = document.getElementById('termGrid');
+      var termEmpty = document.getElementById('termEmpty');
+      var termCount = document.getElementById('termCount');
+      var termForm = document.getElementById('termForm');
+      var termChinese = document.getElementById('termChinese');
+      var termPinyin = document.getElementById('termPinyin');
+      var termPos = document.getElementById('termPos');
+      var userTerms = [];
+      var pinyinFn = null;
+      var starterTerms = [
+        {word:'师兄',pinyin:'shī xiōng',pos:'Xưng hô',meaning:'sư huynh; huynh',note:'Cách gọi người cùng môn phái lớn tuổi hơn; chọn đại từ theo quan hệ và giọng văn.',samples:[
+          {book:'Khúc hát bên bờ Vị Thủy',relation:'Sư đệ → sư huynh',source:'师兄，你先走。',translation:'Sư huynh, huynh đi trước đi。'},
+          {book:'Người giữ đèn trên núi',relation:'Người trong môn phái',source:'我一直把他当师兄。',translation:'Ta vẫn luôn coi huynh ấy là sư huynh。'},
+          {book:'Khúc hát bên bờ Vị Thủy',relation:'Sư đệ → sư huynh',source:'师兄，药拿来了。',translation:'Sư huynh, thuốc đệ mang tới rồi。'}]},
+        {word:'姑娘',pinyin:'gū niang',pos:'Danh từ · xưng hô',meaning:'cô nương; cô gái',note:'Có thể là cách gọi lịch sự hoặc thân mật; cân nhắc bối cảnh cổ trang.',samples:[{book:'Khúc hát bên bờ Vị Thủy',relation:'Người lạ → nữ nhân vật',source:'姑娘，请留步。',translation:'Cô nương, xin dừng bước。'}]},
+        {word:'目光',pinyin:'mù guāng',pos:'Danh từ',meaning:'ánh mắt; ánh nhìn',note:'Có thể dịch thành “ánh mắt” hoặc “ánh nhìn” theo sắc thái câu.',samples:[{book:'Người giữ đèn trên núi',relation:'Miêu tả nhân vật',source:'他的目光落在灯火上。',translation:'Ánh mắt chàng dừng trên ngọn đèn。'}]},
+        {word:'听话',pinyin:'tīng huà',pos:'Động từ · tính từ',meaning:'nghe lời; ngoan ngoãn',note:'Tùy câu có thể là lời dặn, nhận xét hoặc lời trêu.',samples:[{book:'Bản nháp gửi ngày mai',relation:'Bạn bè thân thiết',source:'你今天怎么这么听话？',translation:'Hôm nay cậu ngoan thế?'}]}
+      ];
+      function esc(value) { return String(value || '').replace(/[&<>"']/g, function (char) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]; }); }
+      function getUserTerms() { try { var parsed = JSON.parse(localStorage.getItem('lananh-vocab-notes') || '[]'); return Array.isArray(parsed) ? parsed : []; } catch (error) { return []; } }
+      function allTerms() {
+        var merged = starterTerms.map(function (term) { return Object.assign({}, term, {samples:term.samples.slice()}); });
+        userTerms.forEach(function (term) {
+          var existing = merged.find(function (item) { return item.word === term.word; });
+          if (!existing) { merged.unshift(term); return; }
+          existing.pinyin = term.pinyin || existing.pinyin;
+          existing.pos = term.pos || existing.pos;
+          existing.meaning = term.meaning || existing.meaning;
+          existing.note = term.note || existing.note;
+          existing.samples = existing.samples.concat(term.samples || []);
+        });
+        return merged;
+      }
+      function renderTerms() {
+        var query = termSearch.value.trim().toLocaleLowerCase('vi');
+        var matched = allTerms().filter(function (term) { return [term.word,term.pinyin,term.pos,term.meaning,term.note].concat((term.samples || []).map(function (sample) { return [sample.book,sample.relation,sample.source,sample.translation].join(' '); })).join(' ').toLocaleLowerCase('vi').indexOf(query) !== -1; });
+        termCount.textContent = query ? matched.length + ' mục phù hợp' : allTerms().length + ' mục · số bộ tính theo ngữ cảnh đã lưu';
+        termEmpty.style.display = matched.length ? 'none' : 'block';
+        termGrid.innerHTML = matched.map(function (term) {
+          var samples = term.samples || [];
+          var books = Array.from(new Set(samples.map(function (sample) { return sample.book; }).filter(Boolean)));
+          return '<article class="term-card"><div class="term-top"><div><div class="term-hanzi" lang="zh">'+esc(term.word)+'</div><div class="term-pinyin">'+esc(term.pinyin || 'Chưa có pinyin')+'</div></div><span class="term-tag">'+esc(term.pos || 'Chưa phân loại')+'</span></div><p class="term-meaning">'+esc(term.meaning || '')+'</p><div class="term-meta"><span>'+books.length+' bộ truyện</span><span>'+samples.length+' ngữ cảnh</span></div><div class="context-list">'+samples.map(function (sample) { return '<div class="context"><div class="context-book">'+esc(sample.book || 'Chưa ghi tên bộ')+(sample.relation ? ' · '+esc(sample.relation) : '')+'</div>'+(sample.source ? '<p lang="zh">'+esc(sample.source)+'</p>' : '')+(sample.translation ? '<p class="translation">'+esc(sample.translation)+'</p>' : '')+'</div>'; }).join('')+'</div>'+(term.note ? '<div class="term-note">'+esc(term.note)+'</div>' : '')+'</article>';
+        }).join('');
+      }
+      function guessPos(text) {
+        var exact = {'师兄':'Xưng hô','师姐':'Xưng hô','师弟':'Xưng hô','师妹':'Xưng hô','姑娘':'Danh từ · xưng hô','公子':'Danh từ · xưng hô','大人':'Danh từ · xưng hô','殿下':'Danh từ · xưng hô','陛下':'Danh từ · xưng hô','你':'Đại từ','我':'Đại từ','他':'Đại từ','她':'Đại từ','我们':'Đại từ','喜欢':'Động từ','听话':'Động từ · tính từ','觉得':'Động từ','看见':'Động từ','漂亮':'Tính từ','温柔':'Tính từ','目光':'Danh từ','声音':'Danh từ','事情':'Danh từ','时候':'Danh từ'};
+        if (exact[text]) return exact[text];
+        if (/(吗|呢|吧|啊|了|着|过)$/.test(text)) return 'Trợ từ (gợi ý)';
+        if (/(喜欢|觉得|看见|知道|听见|发现|说|问|答|走|来|去)$/.test(text)) return 'Động từ (gợi ý)';
+        if (/(漂亮|温柔|开心|难过|认真|重要|奇怪|可爱)$/.test(text)) return 'Tính từ (gợi ý)';
+        return text.length >= 4 ? 'Cụm từ (gợi ý)' : 'Danh từ (gợi ý)';
+      }
+      function updateAutomaticFields() {
+        var word = termChinese.value.trim();
+        if (!word) return;
+        termPos.value = guessPos(word);
+        if (!termPos.value) termPos.value = 'Khác';
+        if (pinyinFn) {
+          try { termPinyin.value = pinyinFn(word, { toneType: 'symbol', type: 'array' }).join(' '); } catch (error) { termPinyin.value = ''; }
+        }
+      }
+      termSearch.addEventListener('input', renderTerms);
+      termChinese.addEventListener('input', updateAutomaticFields);
+      termForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var word = termChinese.value.trim();
+        var sample = {book:document.getElementById('termBook').value.trim(),relation:document.getElementById('termRelation').value.trim(),source:document.getElementById('termSource').value.trim(),translation:document.getElementById('termTranslation').value.trim()};
+        var existing = userTerms.find(function (term) { return term.word === word; });
+        if (existing) { existing.samples.push(sample); existing.pinyin = termPinyin.value.trim() || existing.pinyin; existing.pos = termPos.value || existing.pos; existing.meaning = document.getElementById('termMeaning').value.trim(); existing.note = document.getElementById('termNote').value.trim() || existing.note; }
+        else userTerms.unshift({word:word,pinyin:termPinyin.value.trim(),pos:termPos.value,meaning:document.getElementById('termMeaning').value.trim(),note:document.getElementById('termNote').value.trim(),samples:[sample]});
+        try { localStorage.setItem('lananh-vocab-notes', JSON.stringify(userTerms)); } catch (error) { document.getElementById('termAutoHint').textContent = 'Trình duyệt không cho phép lưu cục bộ; hãy sao chép ghi chú trước khi rời trang.'; }
+        termForm.reset();
+        renderTerms();
+      });
+      userTerms = getUserTerms();
+      renderTerms();
+      import('https://esm.sh/pinyin-pro@latest').then(function (module) { pinyinFn = module.pinyin; updateAutomaticFields(); }).catch(function () { document.getElementById('termAutoHint').textContent = 'Không tải được bộ tạo pinyin lúc này. Bạn có thể nhập pinyin thủ công; loại từ vẫn được gợi ý cục bộ.'; });
     }());
   </script>
 </body>
 </html>
+
