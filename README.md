@@ -1,20 +1,13 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# LanAnhArtistry
 
-# Run and deploy your AI Studio app
+LanAnhArtistry is a public landing website about literary translation and storytelling.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/b505d984-7783-4d61-9f42-56be7e862d5c
+Requires Node.js 22 or newer.
 
-## Run Locally
+1. Install dependencies with npm install.
+2. Run npm run dev.
+3. Create a static build with npm run build.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+GitHub Actions builds and deploys the website to GitHub Pages when changes are pushed to main.
