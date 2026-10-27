@@ -29,6 +29,7 @@ import { ShareStoryModal } from './components/modals/ShareStoryModal';
 import { MigrateDataModal } from './components/modals/MigrateDataModal';
 import { SupabaseConfigModal } from './components/modals/SupabaseConfigModal';
 import { ContributeModal } from './components/modals/ContributeModal';
+import { LandingPage } from './components/landing/LandingPage';
 import { CheckCircle2, AlertTriangle, Info, AlertOctagon } from 'lucide-react';
 
 const AppContent: React.FC = () => {
@@ -241,9 +242,15 @@ const AppContent: React.FC = () => {
 };
 
 export default function App() {
-  return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
-  );
+  const [isWorkspace, setIsWorkspace] = useState(() => window.location.hash === '#/workspace');
+
+  useEffect(() => {
+    const syncRoute = () => setIsWorkspace(window.location.hash === '#/workspace');
+    window.addEventListener('hashchange', syncRoute);
+    return () => window.removeEventListener('hashchange', syncRoute);
+  }, []);
+
+  if (!isWorkspace) return <LandingPage />;
+
+  return <AppProvider><AppContent /></AppProvider>;
 }

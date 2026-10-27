@@ -129,6 +129,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileMenu }) => {
         </button>
 
         <div className="flex items-center gap-2">
+          <a href="#" className="hidden items-center gap-1 text-[10px] font-semibold text-[#62847d] transition hover:text-[#1f3034] sm:inline-flex" aria-label="Về trang chủ">
+            ↖ <span>Trang chủ</span>
+          </a>
           <h1 className="text-sm sm:text-base font-semibold text-[#26343B] dark:text-[#ECF7F9] font-serif tracking-tight truncate max-w-[180px] sm:max-w-md">
             {getViewTitle()}
           </h1>
